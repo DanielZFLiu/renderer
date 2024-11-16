@@ -16,7 +16,7 @@ import {v4 as uuidv4} from 'uuid';
 // ==============================
 // Render Latex
 // ==============================
-function renderLatex(text: string) {
+function renderLatex(text: string): string {
     // replace multi-line and inline latex enclosed by $$...$$
     text = text.replace(/\$\$([\s\S]+?)\$\$/g, (match, p1) => {
         try {
@@ -77,7 +77,7 @@ function renderLatex(text: string) {
 // ==============================
 // Render Markdown
 // ==============================
-function getMarked(){
+function getMarked(): Marked{
     return new Marked(
         markedHighlight({
             langPrefix: 'hljs language-',
@@ -94,7 +94,7 @@ function getMarked(){
 // ==============================
 // Additional Styling
 // ==============================
-function injectInlineStyles(html: string) {
+function injectInlineStyles(html: string): string {
     const styles = {
         'table': 'border: 1px solid var(--voithos-silver); border-collapse: collapse;',
         'tr': 'border: 1px solid var(--voithos-silver);',
@@ -116,7 +116,7 @@ function injectInlineStyles(html: string) {
     return doc.body.innerHTML;
 }
 
-export async function renderText(text: string) {
+export async function renderText(text: string): Promise<string> {
     let renderedText = renderLatex(text);
     renderedText = await getMarked().parse(renderedText);
     renderedText = DOMPurify.sanitize(renderedText);
